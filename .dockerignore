@@ -1,0 +1,9 @@
+.venv
+.env
+*.pyc
+__pycache__
+commands.txt
+secrets.yaml
+deployment.yaml
+README.md
+model.pkl
