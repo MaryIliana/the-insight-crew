@@ -28,3 +28,4 @@ class DataUpload(MethodView):
         except UploadNotAllowed:
             extension = data_helper.get_extension(filedata["data"])
             return {"message": "Extension '{}' is not allowed".format(extension)}, 400
+        

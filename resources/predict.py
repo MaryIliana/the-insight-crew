@@ -35,8 +35,8 @@ modelo_cargado = PipelineModel.load("libs/RandomForestClassifier_v1.0.4")
 
 
 
-def run_pyspark_job():
-    data = [(1, 'Alice'), (2, 'Bob'), (3, 'Charlie')]
+def run_pyspark_job(data):
+    #data = [(1, 'Alice'), (2, 'Bob'), (3, 'Charlie')]
     df = spark.createDataFrame(data, ['id', 'name'])
     json_data = df.toJSON().collect()
     return [json.loads(data) for data in json_data]
@@ -49,8 +49,20 @@ class Predict(MethodView):
     def post(cls):
         print(cls)
         try:
-            result = run_pyspark_job()
-            return jsonify(result), 201
+            #result = run_pyspark_job(cls)
+            return {"code":200,"message": "Hemos creado la prediction."}, 201
+        except:
+            return {"code":423,"message": "An error occurred while creating predict."}, 400
+        
+@blp.route("/predict/data")
+class PredictData(MethodView):
+    #@blp.arguments(PredicSchema)
+    #@blp.response(201, PredicSchema)
+    def post(cls):
+        print(cls)
+        try:
+            result = run_pyspark_job(cls)
+            return {"code":200,"message": "Hemos creado la prediction."}, 201
         except:
             return {"code":423,"message": "An error occurred while creating predict."}, 400
         
